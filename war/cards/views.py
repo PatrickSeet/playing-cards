@@ -4,17 +4,25 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from cards.forms import EmailUserCreationForm
-from cards.models import Card, WarGame
-
+from forms import EmailUserCreationForm
+from models import Card, WarGame
+from utils import get_random_comic
 
 def home(request):
-    data = {
-        'cards': Card.objects.all()
-    }
+    return render(request, 'home.html', {
+        'comic': get_random_comic()
+    })
+# def home(request):
+#     data = {
+#         'cards': Card.objects.all()
+#     }
+#
+#     return render(request, 'cards.html', data)
 
-    return render(request, 'cards.html', data)
-
+# def home(request):
+#     return render(request, 'comic_home.html', {
+#         'comic': get_random_comic()
+#     })
 
 def filters(request):
     data = {
@@ -108,3 +116,4 @@ def war(request):
         'dealer_cards': [dealer_card],
         'result': result
     })
+
